@@ -5,7 +5,7 @@
 ### 工作路径
 
 :::tip
-请注意 Go version >= 1.11，并且 GO111MODULE=on (Go MOdule 模式)；
+请注意 Go version >= 1.15，并且 GO111MODULE=on (Go MOdule 模式)；
 :::
 
 新建空文件夹

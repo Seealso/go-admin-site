@@ -4,8 +4,7 @@ pageClass: getting-started
 
 # 项目介绍
 
-
-![build](https://github.com/wenjianzhang/go-admin/workflows/build/badge.svg)   ![license](https://img.shields.io/github/license/mashape/apistatus.svg) 
+![build](https://github.com/wenjianzhang/go-admin/workflows/build/badge.svg) ![license](https://img.shields.io/github/license/mashape/apistatus.svg)
 
 <!-- <CodingAD /> -->
 
@@ -16,12 +15,10 @@ pageClass: getting-started
 1. 体验地址： http://www.zhangwj.com
 2. 账号密码：admin/123456
 
-
 #### 系统要求
 
-* go 1.12.7
-* mysql 5.5及以上
-
+- go 1.15
+- mysql 5.5 及以上
 
 <br/>
 

@@ -1,4 +1,4 @@
-# 编写go-admin应用,第2步
+# 编写 go-admin 应用,第 2 步
 
 这部分教程从 教程第 1 步 结尾的地方继续讲起。我们将建立数据库，创建您的第一个模型。
 
@@ -22,19 +22,19 @@
 
 修改数据库配置信息。
 
-当前我们先通过sql脚本的方式来创建数据库表信息。
+当前我们先通过 sql 脚本的方式来创建数据库表信息。
 
 ```sql
 CREATE TABLE `article` (
-  `article_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '编码',
+  `id` uint NOT NULL AUTO_INCREMENT COMMENT '编码',
   `title` varchar(128) DEFAULT NULL COMMENT '标题',
   `author` varchar(128) DEFAULT NULL COMMENT '作者',
   `content` varchar(255) DEFAULT NULL COMMENT '内容',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `create_by` varchar(128) DEFAULT NULL,
-  `update_by` varchar(128) DEFAULT NULL,
+  `create_by` uint DEFAULT NULL,
+  `update_by` uint DEFAULT NULL,
   PRIMARY KEY (`article_id`),
   KEY `idx_article_deleted_at` (`deleted_at`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='文章';
@@ -85,7 +85,6 @@ https://gitee.com/mydearzwj/image/raw/master/img/genimport3v1.0.0.png"  height="
 <img class="no-margin" src="
 https://gitee.com/mydearzwj/image/raw/master/img/genimport4v1.0.0.png"  height="400px" style="margin:0 auto;box-shadow: 5px 5px 5px #888888;">
 
-
 ### 预览代码
 
 可以在预览处看到工具生成的代码。
@@ -93,35 +92,35 @@ https://gitee.com/mydearzwj/image/raw/master/img/genimport4v1.0.0.png"  height="
 <img class="no-margin" src="
 https://gitee.com/mydearzwj/image/raw/master/img/genimport5v1.0.0.png"  height="400px" style="margin:0 auto;box-shadow: 5px 5px 5px #888888;">
 
-
 ## 编写代码
 
 到这里我们的第一个程序进行的很顺利，下一步我们在项目中创建文件，找到`apis` 文件夹和`models`文件夹，分别创建 demo.go（注意：实际项目中根据业务确定命名）。
 
-models/demo.go文件我们需要稍作修改，修改内容如下：
+models/demo.go 文件我们需要稍作修改，修改内容如下：
 
-当前文件 
+当前文件
 
-1. 全部 `if e.ArticleId != "" { ` 替换成 `if e.ArticleId != 0 { ` 。
+1. 全部 `if e.ArticleId != "" {` 替换成 `if e.ArticleId != 0 {` 。
 
 2. 删除以下内容：
+
 ```
   CreatedAt string `json:"createdAt" gorm:"type:timestamp;"` //
 
 	UpdatedAt string `json:"updatedAt" gorm:"type:timestamp;"` //
 
-	DeletedAt string `json:"deletedAt" gorm:"type:timestamp;"` // 
+	DeletedAt string `json:"deletedAt" gorm:"type:timestamp;"` //
 ```
 
-这个时候，models和apis已经创建好了。
+这个时候，models 和 apis 已经创建好了。
 
 ### 添加路由
 
-打开 router/router.go 文件，找到 
-`auth.Use(authMiddleware.MiddlewareFunc()).Use(middleware.AuthCheckRole())
-	{`
+打开 router/router.go 文件，找到
+`auth.Use(authMiddleware.MiddlewareFunc()).Use(middleware.AuthCheckRole()) {`
 
 添加一下内容：
+
 ```go
 		auth.GET("/articleList",apis.GetArticleList)
 		auth.GET("/article/:articleId",apis.GetArticle)
@@ -130,15 +129,16 @@ models/demo.go文件我们需要稍作修改，修改内容如下：
 		auth.DELETE("/article/:articleId",apis.DeleteArticle)
 ```
 
-到这一步我们的业务api已经写好了，重启前端服务，接下来开始处理页面显示。
+到这一步我们的业务 api 已经写好了，重启前端服务，接下来开始处理页面显示。
 
-### 创建VIEWS 和 JS
+### 创建 VIEWS 和 JS
 
 1. 打开前端项目 `src/api` 目录下，创建`article.js`，并把预览内容直接复制到文件；
 2. 打开`src/views` 目录，创建 `article` 文件夹，并在里边创建 `index.vue` ，并把预览内容直接复制到文件；
 
 index.vue 文件中需要对编辑对话框进行修改
 删除
+
 ```js
 <el-form-item label="编码" prop="articleId">
   <el-input v-model="form.articleId" placeholder="编码" />
@@ -183,8 +183,7 @@ index.vue 文件中需要对编辑对话框进行修改
 
 <img class="no-margin" src="https://gitee.com/mydearzwj/image/raw/master/img/addmenu3v1.0.0.png"  height="400px" style="margin:0 auto;box-shadow: 5px 5px 5px #888888;">
 
-
-### 配置系统api
+### 配置系统 api
 
 > 选择 `接口权限` 添加 `内容管理` 和 `文章管理`
 
@@ -218,21 +217,19 @@ index.vue 文件中需要对编辑对话框进行修改
 
 <img class="no-margin" src="https://gitee.com/mydearzwj/image/raw/master/img/addapi7v1.0.0.png"  height="400px" style="margin:0 auto;box-shadow: 5px 5px 5px #888888;">
 
-
 ### 配置角色权限
 
 > 首先进入角色管理，打开角色列表。
 
 <img class="no-margin" src="https://gitee.com/mydearzwj/image/raw/master/img/setrole1v1.0.0.png"  height="200px" style="margin:0 auto;box-shadow: 5px 5px 5px #888888;">
 
-> 选择超级管理员，点击修改，勾选我们刚才添加的菜单以及api接口，保存。
+> 选择超级管理员，点击修改，勾选我们刚才添加的菜单以及 api 接口，保存。
 
 <img class="no-margin" src="https://gitee.com/mydearzwj/image/raw/master/img/setrole2v1.0.0.png"  height="400px" style="margin:0 auto;box-shadow: 5px 5px 5px #888888;">
 
 > 刷新页面，刚刚授权的菜单就出来了。
 
 <img class="no-margin" src="https://gitee.com/mydearzwj/image/raw/master/img/menu1v1.0.0.png"  height="300px" style="margin:0 auto;box-shadow: 5px 5px 5px #888888;">
-
 
 ### 操作内容管理
 
@@ -256,7 +253,7 @@ index.vue 文件中需要对编辑对话框进行修改
 
 ### 结束语
 
-OK！，内容到这里已经介绍了开始第一个go-admin应用的全部过程，虽然图片居多，主要也是编码内容比较少，希望大家能够掌握，如在使用中遇到了什么问题都可以在qq群或者微信群中沟通交流！谢谢！
+OK！，内容到这里已经介绍了开始第一个 go-admin 应用的全部过程，虽然图片居多，主要也是编码内容比较少，希望大家能够掌握，如在使用中遇到了什么问题都可以在 qq 群或者微信群中沟通交流！谢谢！
 
 :::tip 从哪里获得帮助：
 如果你在阅读本教程的过程中有任何疑问，可以前往[提交建议](https://github.com/wenjianzhang/go-admin/issues/new)。
