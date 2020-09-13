@@ -32,7 +32,7 @@
 
 ```sql
 CREATE TABLE `article` (
-  `id` uint NOT NULL AUTO_INCREMENT COMMENT '编码',
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '编码',
   `title` varchar(128) DEFAULT NULL COMMENT '标题',
   `author` varchar(128) DEFAULT NULL COMMENT '作者',
   `content` varchar(255) DEFAULT NULL COMMENT '内容',
@@ -41,9 +41,9 @@ CREATE TABLE `article` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `create_by` uint DEFAULT NULL,
-  `update_by` uint DEFAULT NULL,
-  PRIMARY KEY (`article_id`),
+  `create_by` int(11) unsigned DEFAULT NULL,
+  `update_by` int(11) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
   KEY `idx_article_deleted_at` (`deleted_at`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='文章';
 ```
